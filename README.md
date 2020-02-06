@@ -1,2 +1,0 @@
-# ShlongBot
-DiscordBot Avocado
