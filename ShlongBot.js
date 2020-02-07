@@ -29,7 +29,9 @@ const client = new Discord.Client();
 const call = '!shlong '
 var status = ['hard','rotten','soft']
 //container for commands
-var commands = ['avocado','freeleon','saufen']
+var commands = ['avocado','freeleon','drink','choice']
+var choice = ['yes','no']
+
 //Feedback if no errors
 client.once('ready', () => {
 	console.log('Ready!');
@@ -51,11 +53,33 @@ client.on('message', message => {
 	if (message.content === call + 'freeleon') 
 	{
 		message.channel.send(`${message.author.username} thinks ikaros should get his role back!`);
+    message.react('👍')
+    .then(() => message.react('👎')); 
     
+    const filter = (reaction, user) => {
+	  return ['👍', '👎'].includes(reaction.emoji.name) && user.id === message.author.id;
+    };
+    message.awaitReactions(filter, { max: 1, time: 10000, errors: ['time'] })
+	.then(collected => {
+		const reaction = collected.first();
+
+		if (reaction.emoji.name === '👍') {
+			message.reply('you reacted with a thumbs up.');
+		} else {
+			message.reply('you reacted with a thumbs down.');
+		}
+	})
+	.catch(collected => {
+		message.reply('you reacted with neither a thumbs up, nor a thumbs down.');
+	});
 	}
-  if (message.content === call + 'saufen')
+  if (message.content === call + 'drink')
 	{
-		message.channel.send("Goaßmass saffa!");
+		message.channel.send("Goaßmass saffa! :beers:"); //beer emojy
+	}
+  if (message.content === call + 'choice')
+	{
+		message.channel.send(choice[Math.floor(Math.random()*choice.length)]); 
 	}
 });
 
