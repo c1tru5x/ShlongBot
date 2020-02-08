@@ -59,10 +59,12 @@ client.on('message', message => {
     if(countY > countN)
     {
        message.react('✅'); //pass
+       message.channel.send('Users voted for Leon!')
     }
     else if(countY < countN)
     {
        message.react('❌'); //pass
+       message.channel.send('Users voted against Leon!')
     }
     else
     {
@@ -91,7 +93,6 @@ client.on('message', message => {
     });
 
     collectorY.on('end', collected => {
-      message.channel.send('Leon will get his role back!');
       countY = `${collected.size}`; 
     });
     collectorN.on('collect', (reaction, reactionCollector) => {
@@ -99,7 +100,6 @@ client.on('message', message => {
     });
 
     collectorN.on('end', collected => {
-      message.channel.send('Leon should stay without his role!');
       countN = `${collected.size}`; 
       voteResult(); //needed only once
 	  });
