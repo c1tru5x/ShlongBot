@@ -26,7 +26,7 @@ const listener = app.listen(process.env.PORT, function() {
 const Discord = require("discord.js");
 const client = new Discord.Client();
 //Start of actual code
-const call = "!shlong ";
+const call = "!s ";
 var status = ["hard", "rotten", "soft"];
 //container for commands
 var commands = ["avocado", "freeleon", "drink", "choice"];
@@ -40,8 +40,8 @@ client.once("ready", () => {
 });
 
 client.on("message", message => {
-  if (message.content === call + "help") {
-    message.channel.send("Available Commands: (!shlong [command])\n");
+  if (message.content === call + "help" || message.content === call + "?") {
+    message.channel.send("Available Commands: (!s [command])\n");
     for (let i = 0; i < commands.length; i++) {
       message.channel.send(commands[i] + "\n");
     }
@@ -62,6 +62,9 @@ client.on("message", message => {
       } else {
         message.channel.send("Equal amount of YES and NO");
       }
+      
+      //check for role
+      
     }
 
     message.channel.send(
